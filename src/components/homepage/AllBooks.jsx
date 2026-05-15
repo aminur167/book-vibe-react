@@ -1,7 +1,7 @@
 import React, { use } from "react";
+import BooksBrowser from "./BooksBrowser";
 import BookFilters from "./BookFilters";
 import BooksEmptyState from "./BooksEmptyState";
-import BooksGrid from "./BooksGrid";
 import BooksSectionHeader from "./BooksSectionHeader";
 import useBookFilters from "../../hooks/useBookFilters";
 
@@ -20,6 +20,7 @@ const AllBooks = () => {
     setSearchText,
     setSortBy,
   } = useBookFilters(books);
+  const browserKey = `${filters.searchText}-${filters.category}-${filters.minimumRating}-${filters.sortBy}`;
 
   return (
     <div className="container mx-auto my-12 px-4 lg:px-0">
@@ -42,7 +43,7 @@ const AllBooks = () => {
       {filteredBooks.length === 0 ? (
         <BooksEmptyState onClearFilters={clearFilters} />
       ) : (
-        <BooksGrid books={filteredBooks} />
+        <BooksBrowser key={browserKey} books={filteredBooks} />
       )}
     </div>
   );

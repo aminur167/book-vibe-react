@@ -14,10 +14,11 @@ https://your-live-site-link.com
 
 ## Features
 
-- Browse a collection of books from JSON data
+- Browse a curated collection of 100 books from JSON data
 - Search books by title or author
 - Filter books by category and minimum rating
 - Sort books by rating, total pages, or publishing year
+- Load more books progressively for a faster browsing experience
 - View detailed information for each book
 - Add books to a Read List
 - Add books to a Wishlist
@@ -37,6 +38,7 @@ https://your-live-site-link.com
 - Responsive navigation and book grid layout
 - Responsive, portfolio-ready book details page
 - Custom error page for invalid routes
+- Reusable JSON template for adding new books safely
 
 ## Tech Stack
 
@@ -63,6 +65,7 @@ https://your-live-site-link.com
 - Conditional rendering
 - Derived data with `useMemo`
 - Controlled form inputs for search, filter, and sort
+- Paginated rendering with a reusable custom hook
 - localStorage data persistence
 - Reusable UI components
 - Responsive component layouts
@@ -73,11 +76,14 @@ https://your-live-site-link.com
 src/
   assets/
   components/
+    bookDetails/
     homepage/
     listedBooks/
+    pageToRead/
     shared/
     ui/
   context/
+  hooks/
   layout/
   pages/
     bookDetails/
@@ -132,7 +138,7 @@ npm run lint
 ### Home
 
 Displays the banner section and all available books in a responsive card grid.
-Users can search by title or author, filter by category/rating, and sort books by rating, pages, or publishing year.
+Users can search by title or author, filter by category/rating, sort books by rating, pages, or publishing year, and progressively load more results.
 
 ### Book Details
 
@@ -146,12 +152,54 @@ Contains separate tabs for Read List and Wishlist. Users can sort books by pages
 
 Displays reading statistics based on the user's Read List, including total books, total pages, average rating, highest rated book, page progress bars, and category summary.
 
+## Book Data
+
+The app currently uses a curated static JSON library:
+
+```txt
+public/booksData.json
+```
+
+The dataset contains 100 books across classic literature, fiction, fantasy, mystery, self-help, biography, computer science, programming, web development, software engineering, database, AI, DevOps, and cybersecurity categories.
+
+To add a new book, copy the structure from:
+
+```txt
+public/bookTemplate.json
+```
+
+Then paste it into `public/booksData.json` and update the values:
+
+```json
+{
+  "bookId": 101,
+  "bookName": "Book Title",
+  "author": "Author Name",
+  "image": "https://example.com/book-cover.jpg",
+  "review": "Write a clear 4-6 sentence review or summary for this book.",
+  "totalPages": 300,
+  "rating": 4.5,
+  "category": "Programming",
+  "tags": ["Tag One", "Tag Two"],
+  "publisher": "Publisher Name",
+  "yearOfPublishing": 2024
+}
+```
+
+Important rules:
+
+- Keep `bookId` unique
+- Keep `tags` as an array
+- Use number values for `totalPages`, `rating`, and `yearOfPublishing`
+- Use a working cover image URL for the `image` field
+- Do not add a comma after the final object in the JSON array
+
 ## Resume Highlight
 
 You can describe this project on your CV like this:
 
 ```txt
-Built a responsive React book discovery app with React Router, Context API, localStorage persistence, dynamic search/filter/sort, wishlist/read-list management, theme switching, toast notifications, and a reading analytics dashboard.
+Built a responsive React book discovery app with React Router, Context API, localStorage persistence, a 100-book JSON dataset, dynamic search/filter/sort, progressive load-more browsing, wishlist/read-list management, theme switching, toast notifications, and a reading analytics dashboard.
 ```
 
 ## Future Improvements
@@ -160,6 +208,7 @@ Built a responsive React book discovery app with React Router, Context API, loca
 - Add user notes or personal rating for each book
 - Add a dedicated chart library for deeper analytics
 - Add backend API integration
+- Move the static JSON library to a database/API for larger datasets
 
 ## Author
 

@@ -1,0 +1,13 @@
+{
+  "bookId": 101,
+  "bookName": "Book Title",
+  "author": "Author Name",
+  "image": "https://example.com/book-cover.jpg",
+  "review": "Write a clear 4-6 sentence review or summary for this book. Keep the tone professional and helpful for readers. Mention the book's core topic, why it is useful, and what type of reader will benefit from it.",
+  "totalPages": 300,
+  "rating": 4.5,
+  "category": "Programming",
+  "tags": ["Tag One", "Tag Two"],
+  "publisher": "Publisher Name",
+  "yearOfPublishing": 2024
+}
