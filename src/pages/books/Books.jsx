@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { BookContext } from "../../context/BookContext";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import ListedReadList from "../../components/listedBooks/ListedReadList";
@@ -7,8 +6,6 @@ import ListedWishList from "../../components/listedBooks/ListedWishList";
 
 const Books = () => {
   const [sortingType, setSortingType] = useState("");
-
-  console.log(sortingType, "sortingType");
 
   return (
     <div className="container mx-auto my-3">

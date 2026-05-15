@@ -1,27 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BookContext } from "../../context/BookContext";
+import React, { useContext, useMemo } from "react";
+import { BookContext } from "../../context/BookContextObject";
 import BookCard from "../ui/BookCard";
 
 const ListedWishList = ({ sortingType }) => {
-  const { wishList } = useContext(BookContext);
-  console.log(wishList, "bookContext");
+  const { wishList, handleRemoveFromWishList } = useContext(BookContext);
 
-  const [filteredWishList, setFilteredWishList] = useState(wishList);
-
-  useEffect(() => {
-    if (sortingType) {
-      if (sortingType === "pages") {
-        const sortedData = [...wishList].sort(
-          (a, b) => a.totalPages - b.totalPages,
-        );
-        console.log(sortedData);
-        setFilteredWishList(sortedData);
-      } else if (sortingType === "rating") {
-        const sortedData = [...wishList].sort((a, b) => a.rating - b.rating);
-        console.log(sortedData);
-        setFilteredWishList(sortedData);
-      }
+  const filteredWishList = useMemo(() => {
+    if (sortingType === "pages") {
+      return [...wishList].sort((a, b) => a.totalPages - b.totalPages);
     }
+
+    if (sortingType === "rating") {
+      return [...wishList].sort((a, b) => a.rating - b.rating);
+    }
+
+    return wishList;
   }, [sortingType, wishList]);
 
   if (filteredWishList.length === 0) {
@@ -36,7 +29,15 @@ const ListedWishList = ({ sortingType }) => {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredWishList.map((book, ind) => (
-          <BookCard key={ind} book={book} />
+          <div key={ind} className="space-y-3">
+            <BookCard book={book} />
+            <button
+              className="btn btn-outline btn-error w-full"
+              onClick={() => handleRemoveFromWishList(book.bookId)}
+            >
+              Remove from Wish List
+            </button>
+          </div>
         ))}
       </div>
     </div>

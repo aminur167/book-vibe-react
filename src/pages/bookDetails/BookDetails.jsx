@@ -1,28 +1,20 @@
-import React, { use, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useLoaderData, useParams } from "react-router";
-import { BookContext } from "../../context/BookContext";
-
-// const booksPromise = fetch("/booksData.json").then((res) => res.json());
+import { BookContext } from "../../context/BookContextObject";
 
 const BookDetails = () => {
   const { bookId: bookParamsId } = useParams();
 
-  //   const books = use(booksPromise);
-
   const books = useLoaderData();
-  // console.log(books, "books ");
   const expectedBook = books.find(
     (book) => book.bookId === Number(bookParamsId),
   );
-  // console.log(expectedBook, "expectedBook");
   const {
-    bookId,
     bookName,
     author,
     image,
     review,
     totalPages,
-    rating,
     category,
     tags,
     publisher,

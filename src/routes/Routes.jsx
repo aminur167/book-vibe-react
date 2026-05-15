@@ -4,6 +4,7 @@ import Homepage from "../pages/homepage/Homepage";
 import Books from "../pages/books/Books";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import BookDetails from "../pages/bookDetails/BookDetails";
+import PageToRead from "../pages/pageToRead/PageToRead";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "/books",
         element: <Books />,
+      },
+      {
+        path: "/page-to-read",
+        element: <PageToRead />,
       },
       {
         path: "/bookDetails/:bookId",
