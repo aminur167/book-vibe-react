@@ -1,6 +1,12 @@
 import React, { useContext } from "react";
-import { useLoaderData, useParams } from "react-router";
+import { Link, useLoaderData, useParams } from "react-router";
 import { BookContext } from "../../context/BookContextObject";
+import BookActions from "../../components/bookDetails/BookActions";
+import BookCover from "../../components/bookDetails/BookCover";
+import BookDetailsHeader from "../../components/bookDetails/BookDetailsHeader";
+import BookMetaGrid from "../../components/bookDetails/BookMetaGrid";
+import BookReview from "../../components/bookDetails/BookReview";
+import BookTags from "../../components/bookDetails/BookTags";
 
 const BookDetails = () => {
   const { bookId: bookParamsId } = useParams();
@@ -15,58 +21,54 @@ const BookDetails = () => {
     image,
     review,
     totalPages,
+    rating,
     category,
     tags,
     publisher,
     yearOfPublishing,
   } = expectedBook;
 
-  const { handleMarkAsRead, handleWishList } = useContext(BookContext);
+  const { handleMarkAsRead, handleWishList, readList, wishList } =
+    useContext(BookContext);
+  const isAlreadyRead = readList.some(
+    (book) => book.bookId === expectedBook.bookId,
+  );
+  const isAlreadyWishListed = wishList.some(
+    (book) => book.bookId === expectedBook.bookId,
+  );
 
   return (
-    <div className="grid grid-cols-2 bg-base-100 shadow-sm container mx-auto my-8">
-      <figure className="w-full flex items-center justify-center bg-gray-100 rounded-xl">
-        <img src={image} alt="Album" className="h-[400px]" />
-      </figure>
-      <div className="card-body space-y-3">
-        <h2 className="card-title text-2xl">{bookName}</h2>
-        <h2 className="card-title">By: {author}</h2>
-        <p className="py-2 border-y">{category}</p>
-        <p>Review: {review}</p>
-        <div className="flex items-center gap-2 ">
-          {tags.map((tag, ind) => (
-            <div
-              key={ind}
-              className="badge text-green-500 bg-green-100 font-bold "
-            >
-              {tag}
-            </div>
-          ))}
-        </div>
-        <div className="border-t space-y-3">
-          <div className="flex justify-between items-center gap-2">
-            <span>Number of pages: </span> <span>{totalPages}</span>
-          </div>
-          <div className="flex justify-between items-center gap-2">
-            <span>publisher: </span> <span>{publisher}</span>
-          </div>
-          <div className="flex justify-between items-center gap-2">
-            <span>Publish time: </span> <span>{yearOfPublishing}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              className="btn"
-              onClick={() => handleMarkAsRead(expectedBook)}
-            >
-              Mark as Read
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => handleWishList(expectedBook)}
-            >
-              Add to Wishlist
-            </button>
-          </div>
+    <div className="container mx-auto my-8 px-4 lg:px-0">
+      <div className="mb-5">
+        <Link to="/" className="btn btn-ghost btn-sm">
+          Back to Books
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 rounded-lg bg-base-100 p-4 shadow-sm md:grid-cols-[0.9fr_1.1fr] md:p-8">
+        <BookCover image={image} title={bookName} />
+
+        <div className="space-y-6">
+          <BookDetailsHeader
+            author={author}
+            category={category}
+            rating={rating}
+            title={bookName}
+          />
+          <BookTags tags={tags} />
+          <BookMetaGrid
+            publisher={publisher}
+            totalPages={totalPages}
+            yearOfPublishing={yearOfPublishing}
+          />
+          <BookReview review={review} />
+          <BookActions
+            book={expectedBook}
+            isAlreadyRead={isAlreadyRead}
+            isAlreadyWishListed={isAlreadyWishListed}
+            onMarkAsRead={handleMarkAsRead}
+            onWishList={handleWishList}
+          />
         </div>
       </div>
     </div>

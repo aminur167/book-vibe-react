@@ -1,7 +1,21 @@
-import React from "react";
-import { Link, NavLink } from "react-router";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const Navbar = () => {
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("bookVibeTheme") || "light",
+  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("bookVibeTheme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+  };
+
   const links = (
     <>
       <li>
@@ -36,8 +50,9 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
-    <nav className="bg-base-100 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-base-100/95 shadow-sm backdrop-blur">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -70,9 +85,20 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end gap-4 ">
-          <button className="btn btn-success text-white">Signin</button>
-          <button className="btn btn-accent text-white">Signup</button>
+        <div className="navbar-end gap-2 md:gap-4">
+          <button
+            className="btn btn-circle btn-ghost"
+            aria-label="Toggle theme"
+            onClick={toggleTheme}
+          >
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </button>
+          <button className="btn btn-success hidden text-white sm:inline-flex">
+            Signin
+          </button>
+          <button className="btn btn-accent hidden text-white sm:inline-flex">
+            Signup
+          </button>
         </div>
       </div>
     </nav>

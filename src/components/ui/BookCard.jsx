@@ -5,13 +5,13 @@ const BookCard = ({ book }) => {
   return (
     <Link
       to={`/bookDetails/${book.bookId}`}
-      className="card bg-base-100 shadow-sm"
+      className="card h-full bg-base-100 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
-      <figure className="p-6 ">
+      <figure className="bg-base-200 p-6">
         <img
           src={book.image}
           alt={book.bookName}
-          className="rounded-xl h-[250px]"
+          className="h-[250px] rounded-xl object-contain"
         />
       </figure>
       <div className="card-body">
@@ -23,9 +23,9 @@ const BookCard = ({ book }) => {
             >
               {tag}
             </div>
-          ))}
+        ))}
         </div>
-        <h2 className="card-title text-2xl">{book.bookName}</h2>
+        <h2 className="card-title text-2xl leading-tight">{book.bookName}</h2>
         <p className="font-semibold text-lg">{book.author}</p>
 
         <div className="card-actions justify-between border-t border-dashed border-gray-300 pt-4 text-xl">
